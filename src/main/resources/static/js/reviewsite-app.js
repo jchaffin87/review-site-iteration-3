@@ -3,7 +3,7 @@ var reviewContent = document.querySelectorAll('.reviewContent');
 
   for (var i = 0; i < reviewContent.length; i++) {
     reviewContent[i].addEventListener('mouseover', function() {
-      this.style.fontSize = '200%';
+      this.style.fontSize = '110%';
     });
     reviewContent[i].addEventListener('mouseout', function() {
       this.style.fontSize = '100%';
@@ -48,8 +48,10 @@ var closeModal = document.getElementsByClassName('close')[0];
 
   //Make comment form add comment to review
   var submitComment = document.querySelector('#submitComment');
+  var commentNum = 0;
 
   submitComment.onclick = function(){
+    commentNum = commentNum + 1;
     var userComment = document.getElementById('commentField').value;
     var userName = document.getElementById('userName').value;
     var commentsSection = document.getElementById('comments');
@@ -57,14 +59,29 @@ var closeModal = document.getElementsByClassName('close')[0];
     const commentTemplate =`
     <p>${userName} says...</p>
     <p>${userComment}</p>
-    <button id='deleteComment'>Delete Comment</button>
     `;
-    commentsSection.appendChild(commentDiv);
+    // commentDiv.className = 'commentNum' + commentNum;
+    commentDiv.id = "commentNum" + commentNum;
     commentDiv.innerHTML = commentTemplate;
+    var deleteCommentButton = document.createElement('button');
+    deleteCommentButton.id = 'commentNum' + commentNum;
+    deleteCommentButton.innerText = 'Delete Comment';
+    deleteCommentButton.onclick = function deleteComment(){
+      if(confirm("Are you sure you want to delete that comment?")){
+        var commentToDelete = document.getElementById(this.id);
+        commentToDelete.parentNode.removeChild(commentToDelete);
+      }
+    }
+    commentsSection.appendChild(commentDiv);
+    commentDiv.appendChild(deleteCommentButton);
     commentModal.style.display = "none";
   }
 
+  //Confirm for delete tag Button
+  var removeTagButton = document.getElementById('removeTagButton');
 
-//Make 'delete comment' button delete comment
-  var deleteCommentButton = document.querySelector('.comments div button')
-  deleteCommentButton.onclick = deleteCommentButton.parentElement.parentElement.removeChild(deleteCommentButton.parentParentElement);
+  removeTagButton.onclick = function() {
+    if(!confirm("Are you sure you want to remove this tag?")){
+      removeTagButton.setAttribute('th:formaction', '@{/remove-tag-cancelled(id=${review.id})}');
+    }
+}

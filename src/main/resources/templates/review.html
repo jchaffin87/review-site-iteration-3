@@ -53,7 +53,7 @@
 				 	<form class="remove-tag" method="POST">
 						<label>Remove tag: </label>
 						<input type="text" name="tagName" />
-						<button th:formaction="@{/remove-tag(id= ${review.reviewId})}">remove</button>
+						<button id= "removeTagButton" th:formaction="@{/remove-tag(id= ${review.reviewId})}">remove</button>
 					</form>
 				</div>
 				<button id="commentButton">Comment</button>

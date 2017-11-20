@@ -92,4 +92,9 @@ public class ReviewsSiteController {
 		return "redirect:/review?id=" + id;
 	}
 
+	@RequestMapping("/remove-tag-cancelled")
+	public String removeTagCancelled(@RequestParam Long id, String tagName) {
+		return "redirect:/review?id=" + id;
+	}
+
 }
